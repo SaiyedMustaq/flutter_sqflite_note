@@ -54,7 +54,18 @@ class _UserAddState extends State<UserAdd> {
                 late var _note;
                 String colorInRGB =
                     "${pickerColor.red},${pickerColor.green},${pickerColor.blue}";
-                print("PICKER COLOR==>$colorInRGB");
+                if (titleController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please Enter Title'),
+                  ));
+                  return;
+                }
+                if (descController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please Enter Description'),
+                  ));
+                  return;
+                }
                 if (isEdit) {
                   _note = Note(
                     id: note!.id,
