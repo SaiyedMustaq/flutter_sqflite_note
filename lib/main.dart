@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_note/ui/NoteListingPage.dart';
 import 'package:sqflite_note/ui/UserList.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true),
-      home: const OfflineUserList(),
+      home: NoteListingPage(),
     );
   }
 }

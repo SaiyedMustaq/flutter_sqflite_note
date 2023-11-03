@@ -40,7 +40,7 @@ class DatabaseHelper {
   Future<Note> create(Note note) async {
     final db = await instance.database;
     final id = await db.insert(tableNotes, note.toJson());
-    return note.copy(id: id);
+    return note.copywith(id: id);
   }
 
   Future<List<Note>> readAllNotes({bool accedingByName = true}) async {

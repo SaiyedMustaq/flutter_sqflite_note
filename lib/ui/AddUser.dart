@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:intl/intl.dart';
 
 import '../database/DatabaseHelper.dart';
 import '../model/Note.dart';
@@ -20,6 +21,7 @@ class _UserAddState extends State<UserAdd> {
   // create some values
   Color pickerColor = const Color(0xff000000);
   Color currentColor = const Color(0xff000000);
+  DateTime dateTimeNow = DateTime.now();
 
 // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -40,6 +42,15 @@ class _UserAddState extends State<UserAdd> {
       setState(() {});
     }
     super.initState();
+  }
+
+  dateReturn(DateTime dateTime) {
+    var formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(dateTime);
+  }
+
+  timeReturn(DateTime dateTime) {
+    return DateFormat('kk:mm:a').format(dateTime);
   }
 
   @override
@@ -72,6 +83,9 @@ class _UserAddState extends State<UserAdd> {
                     title: titleController.text,
                     description: descController.text,
                     color: colorInRGB,
+                    isComplete: "0",
+                    date: "${dateReturn(dateTimeNow)}",
+                    time: "${timeReturn(dateTimeNow)}",
                   );
                   DatabaseHelper.instance.update(_note);
                 } else {
@@ -79,6 +93,9 @@ class _UserAddState extends State<UserAdd> {
                     title: titleController.text,
                     description: descController.text,
                     color: colorInRGB,
+                    isComplete: '',
+                    date: "${dateReturn(dateTimeNow)}",
+                    time: "${timeReturn(dateTimeNow)}",
                   );
                   DatabaseHelper.instance.create(_note);
                 }
