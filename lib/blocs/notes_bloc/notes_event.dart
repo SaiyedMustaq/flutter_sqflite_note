@@ -18,6 +18,12 @@ class AddNoteEvent extends NotesEvent {
   List<Object> get pros => [note];
 }
 
+class NoteSearchEvents extends NotesEvent {
+  final String queary;
+  const NoteSearchEvents({required this.queary});
+  List<Object> get pros => [queary];
+}
+
 class UpdateNoteEvent extends NotesEvent {
   final Note note;
   const UpdateNoteEvent({required this.note});
@@ -34,4 +40,9 @@ class IsCompleteEvent extends NotesEvent {
   final Note note;
   const IsCompleteEvent({required this.note});
   List<Object> get pros => [note];
+}
+
+class NoteLoadEvent extends NotesEvent {
+  final Note note;
+  const NoteLoadEvent({required this.note});
 }

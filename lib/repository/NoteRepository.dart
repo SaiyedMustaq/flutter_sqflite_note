@@ -25,5 +25,12 @@ class NoteRepository extends NoteApi {
       await DatabaseHelper.instance.delete(id);
 
   @override
-  Future updateNote(int id) async => await DatabaseHelper.instance.delete(id);
+  Future updateNote(Note id) async => await DatabaseHelper.instance.update(id);
+
+  @override
+  Future addNewNote(Note note) async {
+    await DatabaseHelper.instance.insertNewNote(note);
+  }
 }
+
+class TodoNotFoundException implements Exception {}

@@ -4,8 +4,10 @@ import 'package:sqflite_note/ui/TaskWidget.dart';
 
 import '../blocs/notes_bloc/notes_bloc.dart';
 import '../model/Note.dart';
+import 'AddUser.dart';
 
 class NoteListingPage extends StatelessWidget {
+  TextEditingController searchController = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -19,9 +21,20 @@ class NoteListingPage extends StatelessWidget {
   }
 
   Widget buildPage(BuildContext context) {
+    final bloc = BlocProvider.of<NotesBloc>(context);
     return Scaffold(
       appBar:
           AppBar(automaticallyImplyLeading: false, title: const Text("Notes")),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NoteAddEditPage(
+                            note: null,
+                          ))).then((value) {
+                bloc.add(const LoadAllNoteEvent(noteList: []));
+              }),
+          child: const Icon(Icons.add)),
       body: BlocBuilder<NotesBloc, NotesState>(
         builder: (context, state) {
           if (state is NotesInitialState) {
@@ -33,15 +46,46 @@ class NoteListingPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 20.0)));
           }
           if (state is NotesLoadedState) {
-            return ListView.builder(
-              itemCount: state.noteList.length,
-              itemBuilder: (context, index) {
-                Note _note = state.noteList[index];
-                return TaskWidget(
-                  note: _note,
-                  onCheckEvent: (checkUncheck, note) {},
-                );
-              },
+            return Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        context
+                            .read<NotesBloc>()
+                            .add(NoteSearchEvents(queary: value));
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: "Search",
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                Expanded(
+                    child: ListView.builder(
+                  itemCount: state.noteList.length,
+                  itemBuilder: (context, index) {
+                    Note noteModel = state.noteList[index];
+                    return TaskWidget(
+                      note: noteModel,
+                      onCheckEvent: (checkUncheck, note) {
+                        context.read<NotesBloc>().add(IsCompleteEvent(
+                            note: note.copywith(
+                                isComplete: checkUncheck, id: note.id)));
+                      },
+                    );
+                  },
+                ))
+              ],
             );
           }
           return Container();
@@ -49,4 +93,6 @@ class NoteListingPage extends StatelessWidget {
       ),
     );
   }
+
+  Future gotoAddEditPage(BuildContext context, Note? note) async {}
 }

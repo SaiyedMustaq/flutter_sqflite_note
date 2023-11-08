@@ -7,32 +7,29 @@ import '../model/Note.dart';
 class TaskWidget extends StatelessWidget {
   final Note note;
   Function(String value, Note id) onCheckEvent;
-
   TaskWidget({super.key, required this.note, required this.onCheckEvent});
 
   @override
   Widget build(BuildContext context) {
+    //print("NOTE ==>${note.toJson()}");
     return ListTile(
-        leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.star, color: Colors.amber)),
-        title: Text(
-          note.title,
-          style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w700,
-              decoration: note.isComplete == "1"
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none),
-        ),
-        subtitle: Text("${note.time} / ${note.date}"),
-        trailing: IsComplete(
-          onTap: (String value) {
-            context.read<NotesBloc>().add(IsCompleteEvent(
-                note: note.copywith(isComplete: value, id: note.id)));
-          },
-          status: false,
-        ));
+      leading: IconButton(
+          onPressed: () {}, icon: const Icon(Icons.star, color: Colors.amber)),
+      title: Text(
+        note.title,
+        style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w700,
+            decoration: note.isComplete == "1"
+                ? TextDecoration.lineThrough
+                : TextDecoration.none),
+      ),
+      subtitle: Text("${note.time} / ${note.date}"),
+      trailing: IsComplete(
+        onTap: (String value) => onCheckEvent(value, note),
+        status: false,
+      ),
+    );
   }
 }
 

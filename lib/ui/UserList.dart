@@ -63,11 +63,10 @@ class _OfflineUserListState extends State<OfflineUserList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UserAdd(
-                        noteObject: null,
-                      ))).then((value) => getAllNots(isAcceding));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NoteAddEditPage(note: null)))
+              .then((value) => getAllNots(isAcceding));
         },
         child: const Icon(Icons.add),
       ),
@@ -80,9 +79,7 @@ class EmptyUserList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("No user found"),
-    );
+    return const Center(child: Text("No user found"));
   }
 }
 
@@ -150,7 +147,7 @@ class UserList extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      UserAdd(noteObject: e)))
+                                                      NoteAddEditPage(note: e)))
                                           .then((value) {
                                         onBackRefersh();
                                       });

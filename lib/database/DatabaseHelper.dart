@@ -32,12 +32,15 @@ class DatabaseHelper {
             ${NoteFields.id} INTEGER PRIMARY KEY,
             ${NoteFields.title} TEXT NOT NULL,
             ${NoteFields.description} TEXT NOT NULL,
-            ${NoteFields.color} TEXT NOT NULL
+            ${NoteFields.color} TEXT NOT NULL,
+            ${NoteFields.date} TEXT NOT NULL,
+            ${NoteFields.time} TEXT NOT NULL,
+            ${NoteFields.isComplete} TEXT NOT NULL
           )
           ''');
   }
 
-  Future<Note> create(Note note) async {
+  Future<Note> insertNewNote(Note note) async {
     final db = await instance.database;
     final id = await db.insert(tableNotes, note.toJson());
     return note.copywith(id: id);
