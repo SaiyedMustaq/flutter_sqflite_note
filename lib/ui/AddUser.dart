@@ -80,7 +80,7 @@ class _NoteAddEditPageState extends State<NoteAddEditPage> {
                           title: titleController.text,
                           description: descController.text,
                           color: colorInRGB,
-                          isComplete: "0",
+                          isComplete: widget.note!.isComplete,
                           date: "${dateReturn(dateTimeNow)}",
                           time: "${timeReturn(dateTimeNow)}");
                       //DatabaseHelper.instance.update(_note);
@@ -90,7 +90,7 @@ class _NoteAddEditPageState extends State<NoteAddEditPage> {
                           title: titleController.text,
                           description: descController.text,
                           color: colorInRGB,
-                          isComplete: '',
+                          isComplete: 'false',
                           date: "${dateReturn(dateTimeNow)}",
                           time: "${timeReturn(dateTimeNow)}");
                       bloc.add(AddNoteEvent(note: _note));

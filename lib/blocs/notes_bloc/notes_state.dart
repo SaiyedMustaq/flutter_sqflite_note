@@ -11,10 +11,10 @@ class NotesInitialState extends NotesState {}
 
 class NotesLoadedState extends NotesState {
   final List<Note> noteList;
-  final List<Note> noteCompletedList;
-  const NotesLoadedState(
-      {this.noteList = const <Note>[],
-      this.noteCompletedList = const <Note>[]});
+
+  const NotesLoadedState({
+    this.noteList = const <Note>[],
+  });
   List<Object> get pros => [noteList];
 }
 

@@ -8,4 +8,6 @@ abstract class NoteApi {
   Future deleteNote(int id);
   Future<List<Note>> alphabaticOrder();
   Future<void> close();
+  Future<int> clearCompleted();
+  Future<int> completeAll({required bool isCompleted});
 }

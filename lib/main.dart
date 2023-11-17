@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_note/ui/NoteListingPage.dart';
+import 'package:sqflite_note/ui/notes_bloc_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true),
-      home: NoteListingPage(),
+      home: NotesBlocProvider(),
     );
   }
 }

@@ -31,6 +31,16 @@ class NoteRepository extends NoteApi {
   Future addNewNote(Note note) async {
     await DatabaseHelper.instance.insertNewNote(note);
   }
+
+  @override
+  Future<int> clearCompleted() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> completeAll({required bool isCompleted}) {
+    throw UnimplementedError();
+  }
 }
 
 class TodoNotFoundException implements Exception {}
